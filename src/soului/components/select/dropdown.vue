@@ -4,7 +4,7 @@
 <script>
 
     export default {
-        name: 'Drop',
+        name: 'sDropdown',
         props: {
             placement: {
                 type: String,

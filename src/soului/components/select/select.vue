@@ -5,7 +5,7 @@
       <div :class="{'multiple-wrap clearfix': multipleable }">
         <span class="item-tag" v-for="(item,index) in multipleLabel">
           <span> {{ item }} </span>
-          <icon type="add" style="transform: rotate(45deg);" @click.native.stop="clearOption(index)"></icon>
+          <s-icon type="add" style="transform: rotate(45deg);" @click.native.stop="clearOption(index)"></s-icon>
         </span>
         <input type="text" class="select-input-inner"
              :placeholder="showPlaceholder"
@@ -18,23 +18,23 @@
              @keydown.delete="handleDelete"
              ref="input">
       </div>
-      <icon :type="icontype" class="select-icon arrows"></icon>
-      <icon type="closefill" class="select-icon clears" v-show="showClearIcon" @click.native.stop="clearSelect"></icon>
+      <s-icon :type="icontype" class="select-icon arrows"></s-icon>
+      <s-icon type="closefill" class="select-icon clears" v-show="showClearIcon" @click.native.stop="clearSelect"></s-icon>
     </div>
     <transition name="slide-down">
-      <dropdown v-show="dropVisible" :style="dropTop">
+      <s-dropdown v-show="dropVisible" :style="dropTop">
         <ul class="select-list">
           <slot></slot>
           <li v-if="emptyItem" style="color: #bbb;">{{ emptyText }}</li>
         </ul>
-      </dropdown>
+      </s-dropdown>
     </transition>
   </div>
 </template>
 
 <script>
-  import icon from '../icon';
-  import dropdown from './dropdown';
+  import sIcon from '../icon';
+  import sDropdown from './dropdown';
   import clickoutside from '../../directives/clickoutside';
   import Emitter from '../../mixins/emitter';
   import Locale from '../../mixins/locale';
@@ -42,7 +42,7 @@
   export default {
       mixins: [Emitter, Locale],
       name: 'selection',
-      components: { icon, dropdown },
+      components: { sIcon, sDropdown },
       directives: { clickoutside },
       props: {
           placeholder: {
@@ -116,7 +116,7 @@
           },
       },
       methods: {
-          toggleDrop: function(hideF) {
+          toggleDrop(hideF) {
             if (!this.disabled) {
               if(!this.dropVisible) {
                   this.findChild((child) => {
@@ -139,15 +139,15 @@
               this.queryFilter = false;
             }
           },
-          handleClose: function() {
+          handleClose() {
               this.toggleDrop('static')
           },
-          clearSelect: function() {
+          clearSelect() {
               this.query = "";
               this.$emit('input', "");
               this.$emit('change');
           },
-          clearOption: function(optionIndex) {
+          clearOption(optionIndex) {
               this.multipleLabel.splice(optionIndex, 1);
               this.multipleValue.splice(optionIndex, 1);
               this.$emit('input', this.multipleValue);
@@ -155,7 +155,7 @@
                   this.dropTop = {"top": (this.$refs.wrap.offsetHeight - 2) + "px"};
               },10);
           },
-          navigateOptions: function(direction) {
+          navigateOptions(direction) {
               if(direction == "next") {
                   this.hoverIndex++;
                   if(this.hoverIndex == this.options.length) {
@@ -180,7 +180,7 @@
                   }
               })
           },
-          updateOptions: function() {
+          updateOptions() {
               const optionInfo = this.$slots.default || [];
               let optionArr = [];
               let index = 0;

@@ -1,5 +1,7 @@
+<!--
 <template>
   <div id="index" v-title="'首页'" style="margin: 15px 20px;">
+
       <switch-btn v-model="switchV1" @change="switchEvent">
       </switch-btn>
       <switch-btn v-model="switchV2">
@@ -32,9 +34,12 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import switchBtn from '../soului/components/switchBtn'
 import icon from '../soului/components/icon'
 import {selection, optionItem} from '../soului/components/selection'
+import message from '../soului/components/message'
+Vue.prototype.$message = message
 export default {
   name: 'index',
   data() {
@@ -65,7 +70,7 @@ export default {
             }
         ],
         selectV1: "shenzhen",
-        selectV2: ["hangzhou","chongqing"]
+        selectV2: ["hangzhou","chongqing"],
     }
   },
   components: {
@@ -76,7 +81,14 @@ export default {
   },
   methods: {
       switchEvent: function() {
-          console.log(this.switchV1);
+          if(this.switchV1) {
+              this.$message({
+                  content: '恭喜你，这是一条成功消息',
+                  type: 'success'
+              });
+          } else {
+              this.$message.error('错了哦，这是一条错误消息');
+          }
       },
       selectEvent: function() {
           console.log(this.selectV1);
@@ -84,3 +96,4 @@ export default {
   }
 }
 </script>
+-->

@@ -5,7 +5,7 @@
     import Emitter from '../../mixins/emitter';
 
     export default {
-        name: 'optionItem',
+        name: 'sOption',
         componentName: 'option-item',
         mixins: [ Emitter ],
         props: {

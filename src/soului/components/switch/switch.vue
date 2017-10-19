@@ -12,7 +12,7 @@
 
 <script>
   export default {
-      name: 'switchBtn',
+      name: 'sSwitch',
       props: {
           value: {
             type: Boolean,
@@ -25,11 +25,7 @@
           size: {
               type: String,
               default: ""
-          },
-          disabled: Boolean,
-          value: {
-            required: true
-          },
+          }
       },
       data() {
           return {
