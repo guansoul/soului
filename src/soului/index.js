@@ -7,6 +7,7 @@ import { sRow, sCol } from './components/layout';
 import sMessage from './components/message';
 import { sSelect, sOption } from './components/select';
 import sSwitch from './components/switch';
+import sButton from './components/button';
 
 const components = {
   sIcon,
@@ -14,7 +15,8 @@ const components = {
   sCol,
   sSelect,
   sOption,
-  sSwitch
+  sSwitch,
+  sButton
 }
 
 

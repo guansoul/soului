@@ -37,7 +37,7 @@
           toggle() {
               this.currentValue = !this.currentValue;
               this.$emit('input', !this.value);
-              this.$emit('change');
+              this.$emit('change', event);
           }
       }
   }

@@ -19,7 +19,7 @@
              ref="input">
       </div>
       <s-icon :type="icontype" class="select-icon arrows"></s-icon>
-      <s-icon type="closefill" class="select-icon clears" v-show="showClearIcon" @click.native.stop="clearSelect"></s-icon>
+      <s-icon type="close-fill" class="select-icon clears" v-show="showClearIcon" @click.native.stop="clearSelect"></s-icon>
     </div>
     <transition name="slide-down">
       <s-dropdown v-show="dropVisible" :style="dropTop">
@@ -307,7 +307,6 @@
                 }
               }
               this.$emit('change');
-
           })
       },
       beforeDestroy () {
@@ -320,7 +319,7 @@
                       this.queryFilter = false;
                       return;
                   } else {
-                      this.broadcast('optionItem', 'on-query-filter', val);
+                      this.broadcast('sOption', 'on-query-filter', val);
                       let hiddenNum = 0;
                       this.findChild((child) => {
                           if(child.visible) {

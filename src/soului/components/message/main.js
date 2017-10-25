@@ -17,10 +17,18 @@ var Message = function(options) {
   }
   let userOnClose = options.onClose;
   let id = 'message_' + msgNum++;
+  let msgTop = options.top ? options.top : 20;
   showNum++;
   options.onClose = function() {
     Message.close(id, userOnClose);
     showNum--;
+    setTimeout(() => {
+      document.querySelectorAll(".message-wrap").forEach(dom => {
+        if(dom.style.top != "20px") {
+          dom.style.top = ((dom.style.top.replace("px","") | 0) - 48) + "px";
+        }
+      })
+    }, 400);
   };
   msgInstance = new MessageConstructor({
     data: options
@@ -30,9 +38,8 @@ var Message = function(options) {
   document.body.appendChild(msgInstance.vm.$el);
   msgInstance.vm.visible = true;
   msgInstance.dom = msgInstance.vm.$el;
-  console.log(showNum);
-  msgInstance.dom.style.top = 20 + ((showNum-1 | 0) * 48) + "px";
-  msgInstance.dom.style.zIndex = 999;
+  msgInstance.dom.style.top = msgTop + ((showNum-1 | 0) * 48) + "px";
+  msgInstance.dom.style.zIndex = 9999;
   instances.push(msgInstance);
   return msgInstance.vm;
 };
@@ -62,9 +69,9 @@ Message.close = function(id, userOnClose) {
   }
 };
 
-Message.closeAll = function() {
+Message.destroy = function() {
   for (let i = instances.length - 1; i >= 0; i--) {
-    instances[i].close();
+    instances[i].closeMsg();
   }
 };
 export default Message;

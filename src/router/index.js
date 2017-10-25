@@ -3,6 +3,10 @@ import Router from 'vue-router'
 import Index from '../template/index'
 import IconDoc from '../template/icon'
 import LayoutDoc from '../template/layout'
+import ButtonDoc from '../template/button'
+import SwitchDoc from '../template/switch'
+import SelectDoc from '../template/select'
+import MessageDoc from '../template/message'
 
 Vue.use(Router)
 
@@ -20,14 +24,34 @@ export default new Router({
       component: Index
     },
     {
+      path: '/layout',
+      name: 'layout',
+      component: LayoutDoc
+    },
+    {
       path: '/icon',
       name: 'icon',
       component: IconDoc
     },
     {
-      path: '/layout',
-      name: 'layout',
-      component: LayoutDoc
-    }
+      path: '/switch',
+      name: 'switch',
+      component: SwitchDoc
+    },
+    {
+      path: '/button',
+      name: 'button',
+      component: ButtonDoc
+    },
+    {
+      path: '/select',
+      name: 'select',
+      component: SelectDoc
+    },
+    {
+      path: '/message',
+      name: 'message',
+      component: MessageDoc
+    },
   ]
 })

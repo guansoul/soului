@@ -83,18 +83,24 @@ body {
   padding: 8px 0;
 }
 .code-wrap {
-  line-height: 0;
+  display: block;
+  line-height: 1.8;
+  padding: 13px 16px;
+  background-color: #f9fafc;
+  border: 1px solid #eaeefb;
+  margin-bottom: 22px;
+  border-radius: 4px;
+  color: #3e76f6;
+  overflow: auto;
+}
+.code-wrap pre {
+  font-size: 0;
 }
 .code-wrap code {
   display: block;
   line-height: 1.8;
   font-family: Menlo,Monaco,Consolas,Courier,monospace;
   font-size: 12px;
-  padding: 16px 20px;
-  background-color: #f9fafc;
-  border: 1px solid #eaeefb;
-  margin-bottom: 22px;
-  border-radius: 4px;
   -webkit-font-smoothing: auto;
   color: #3e76f6;
 }
@@ -168,7 +174,15 @@ body {
   background: #f1f1f1;
   margin: 9px 0;
 }
-.desc-title .code-wrap code {
-  margin-bottom: 10px;
-  padding: 10px 15px;
+.sw-note {
+  display: inline-block;
+  position: relative;
+  top: -6px;
+  margin: 0 3px 0 8px;
+}
+.usage-wrap p {
+  margin: 5px 0;
+}
+.usage-wrap .code-wrap {
+  margin-top: 7px;
 }

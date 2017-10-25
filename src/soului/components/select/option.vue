@@ -6,7 +6,7 @@
 
     export default {
         name: 'sOption',
-        componentName: 'option-item',
+        componentName: 's-option',
         mixins: [ Emitter ],
         props: {
             value: {

@@ -28,7 +28,8 @@
             </s-row>
           </div>
 
-          <pre class="code-wrap">
+          <div class="code-wrap">
+          <pre>
             <code>&lt;s-row&gt;
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"12"</span>&gt; col-12 &lt;/s-col&gt;
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"12"</span>&gt; col-12 &lt;/s-col&gt;
@@ -39,6 +40,7 @@
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"8"</span>&gt; col-8 &lt;/s-col&gt;
 &lt;/s-row&gt;</code>
           </pre>
+          </div>
 
           <h4 class="sub-title" style="font-size: 16px;line-height: 30px;padding-left: 15px;"> 栅格布局属性 </h4>
           <p class="mark-section" style="padding-left: 15px;">区块间隔: 栅格区块时常需要间隔，你可以使用<code class="code-sm">s-row</code>的<code class="code-sm">gutter</code>属性，<code class="code-sm">gutter</code>的值为区块的间距，单位 px</p>
@@ -62,13 +64,13 @@
               <s-col xs="12" sm="4" md="8" lg="4" style="background: #32c5d2;"> col </s-col>
             </s-row>
           </div>
-
-          <pre class="code-wrap">
+          <div class="code-wrap">
+          <pre>
             <code>&lt;s-row <span class="code-attr">gutter</span>=<span class="code-value">"24"</span>&gt;  //区间间隔
-    &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"6"</span> &gt; col-6 &lt;/s-col&gt;
-    &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"6"</span> &gt; col-6 &lt;/s-col&gt;
-    &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"6"</span> &gt; col-6 &lt;/s-col&gt;
-    &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"6"</span> &gt; col-6 &lt;/s-col&gt;
+    &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"6"</span> &gt; &lt;div&gt; col-6 &lt;/div&gt; &lt;/s-col&gt;
+    &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"6"</span> &gt; &lt;div&gt; col-6 &lt;/div&gt; &lt;/s-col&gt;
+    &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"6"</span> &gt; &lt;div&gt; col-6 &lt;/div&gt; &lt;/s-col&gt;
+    &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"6"</span> &gt; &lt;div&gt; col-6 &lt;/div&gt; &lt;/s-col&gt;
 &lt;/s-row&gt;
 &lt;s-row&gt;  //左右偏移
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"6"</span> &gt; col-6 &lt;/s-col&gt;
@@ -82,7 +84,7 @@
     &lt;s-col <span class="code-attr">xs</span>=<span class="code-value">"12"</span> <span class="code-attr">sm</span>=<span class="code-value">"4"</span> <span class="code-attr">md</span>=<span class="code-value">"8"</span> <span class="code-attr">lg</span>=<span class="code-value">"4"</span>&gt; col &lt;/s-col&gt;
 &lt;/s-row&gt;</code>
           </pre>
-
+          </div>
           <h4 class="sub-title"> Flex布局 </h4>
           <p class="mark-section"> Soul UI的栅格化系统支持<a href="http://www.runoob.com/w3cnote/flex-grammar.html">Flex布局</a>("弹性布局"，用来为盒状模型提供最大的灵活性)，你可以设置<code class="code-sm">s-row</code>的<code class="code-sm">type</code>属性为 "flex"。</p>
         <s-row gutter="24" class="desc-title">
@@ -94,14 +96,16 @@
               <s-col flex="2">flex:2</s-col>
             </s-row>
 
-            <pre class="code-wrap">
+            <div class="code-wrap">
+            <pre>
               <code>&lt;s-row <span class="code-attr">type</span>=<span class="code-value">"flex"</span>&gt;  //自定义弹性布局
     &lt;s-col <span class="code-attr">style</span>=<span class="code-value">"width: 200px;"</span>&gt; width: 200 &lt;/s-col&gt;
     &lt;s-col <span class="code-attr">flex</span>=<span class="code-value">"1"</span>&gt; flex: 1 &lt;/s-col&gt;
     &lt;s-col <span class="code-attr">flex</span>=<span class="code-value">"2"</span>&gt; flex: 2 &lt;/s-col&gt;
 &lt;/s-row&gt;
               </code>
-          </pre>
+            </pre>
+            </div>
 
           </s-col>
           <s-col span="12">
@@ -113,15 +117,16 @@
               <s-col span="5"> col-5 </s-col>
             </s-row>
 
-            <pre class="code-wrap">
+            <div class="code-wrap">
+            <pre>
               <code>&lt;s-row <span class="code-attr">type</span>=<span class="code-value">"flex"</span> <span class="code-attr">justify</span>=<span class="code-value">"start"</span>&gt; //子元素向左排列
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt; col-5 &lt;/s-col&gt;
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt; col-5 &lt;/s-col&gt;
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt; col-5 &lt;/s-col&gt;
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt; col-5 &lt;/s-col&gt;
 &lt;/s-row&gt;</code>
-          </pre>
-
+            </pre>
+            </div>
           </s-col>
           <s-col span="12">
             <p>子元素向右排列</p>
@@ -132,14 +137,16 @@
               <s-col span="5"> col-5 </s-col>
             </s-row>
 
-            <pre class="code-wrap">
+            <div class="code-wrap">
+            <pre>
               <code>&lt;s-row <span class="code-attr">type</span>=<span class="code-value">"flex"</span> <span class="code-attr">justify</span>=<span class="code-value">"end"</span>&gt; //子元素向右排列
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt; col-5 &lt;/s-col&gt;
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt; col-5 &lt;/s-col&gt;
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt; col-5 &lt;/s-col&gt;
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt; col-5 &lt;/s-col&gt;
 &lt;/s-row&gt;</code>
-          </pre>
+            </pre>
+            </div>
 
           </s-col>
           <s-col span="12">
@@ -151,14 +158,16 @@
               <s-col span="5"> col-5 </s-col>
             </s-row>
 
-            <pre class="code-wrap">
+            <div class="code-wrap">
+            <pre>
               <code>&lt;s-row <span class="code-attr">type</span>=<span class="code-value">"flex"</span> <span class="code-attr">justify</span>=<span class="code-value">"center"</span>&gt; //子元素居中排列
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt; col-5 &lt;/s-col&gt;
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt; col-5 &lt;/s-col&gt;
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt; col-5 &lt;/s-col&gt;
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt; col-5 &lt;/s-col&gt;
 &lt;/s-row&gt;</code>
-          </pre>
+            </pre>
+            </div>
 
           </s-col>
           <s-col span="12">
@@ -170,14 +179,16 @@
               <s-col span="5"> col-5 </s-col>
             </s-row>
 
-            <pre class="code-wrap">
+            <div class="code-wrap">
+            <pre>
               <code>&lt;s-row <span class="code-attr">type</span>=<span class="code-value">"flex"</span> <span class="code-attr">justify</span>=<span class="code-value">"space-between"</span>&gt; //子元素等宽排列
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt; col-5 &lt;/s-col&gt;
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt; col-5 &lt;/s-col&gt;
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt; col-5 &lt;/s-col&gt;
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt; col-5 &lt;/s-col&gt;
 &lt;/s-row&gt;</code>
-          </pre>
+            </pre>
+            </div>
 
           </s-col>
           <s-col span="12">
@@ -189,14 +200,16 @@
               <s-col span="5"> col-5 </s-col>
             </s-row>
 
-            <pre class="code-wrap">
+            <div class="code-wrap">
+            <pre>
               <code>&lt;s-row <span class="code-attr">type</span>=<span class="code-value">"flex"</span> <span class="code-attr">justify</span>=<span class="code-value">"space-around"</span>&gt; //子元素分散排列
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt; col-5 &lt;/s-col&gt;
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt; col-5 &lt;/s-col&gt;
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt; col-5 &lt;/s-col&gt;
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt; col-5 &lt;/s-col&gt;
 &lt;/s-row&gt;</code>
-          </pre>
+            </pre>
+            </div>
 
           </s-col>
           <s-col span="12">
@@ -208,7 +221,8 @@
               <s-col span="5"> <div style="height: 50px;"> col-5 </div> </s-col>
             </s-row>
 
-            <pre class="code-wrap">
+            <div class="code-wrap">
+            <pre>
               <code>&lt;s-row <span class="code-attr">type</span>=<span class="code-value">"flex"</span> <span class="code-attr">justify</span>=<span class="code-value">"center"</span> <span class="code-attr">align</span>=<span class="code-value">"top"</span>
        <span class="code-attr">style</span>=<span class="code-value">"height:100px"</span>&gt; //顶部对齐
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt;
@@ -224,7 +238,8 @@
           &lt;div <span class="code-attr">style</span>=<span class="code-value">"height: 50px;"</span>&gt; col-5 &lt;/div&gt;
     &lt;/s-col&gt;
 &lt;/s-row&gt;</code>
-          </pre>
+            </pre>
+            </div>
 
           </s-col>
           <s-col span="12">
@@ -236,7 +251,8 @@
               <s-col span="5"> <div style="height: 50px;"> col-5 </div> </s-col>
             </s-row>
 
-            <pre class="code-wrap">
+            <div class="code-wrap">
+            <pre>
               <code>&lt;s-row <span class="code-attr">type</span>=<span class="code-value">"flex"</span> <span class="code-attr">justify</span>=<span class="code-value">"space-around"</span> <span class="code-attr">align</span>=<span class="code-value">"middle"</span>
        <span class="code-attr">style</span>=<span class="code-value">"height:100px"</span>&gt; //居中对齐
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt;
@@ -252,7 +268,8 @@
           &lt;div <span class="code-attr">style</span>=<span class="code-value">"height: 50px;"</span>&gt; col-5 &lt;/div&gt;
     &lt;/s-col&gt;
 &lt;/s-row&gt;</code>
-          </pre>
+            </pre>
+            </div>
 
           </s-col>
           <s-col span="12">
@@ -266,7 +283,8 @@
           </s-col>
           <s-col span="12">
 
-            <pre class="code-wrap">
+            <div class="code-wrap">
+            <pre>
               <code>&lt;s-row <span class="code-attr">type</span>=<span class="code-value">"flex"</span> <span class="code-attr">justify</span>=<span class="code-value">"center"</span> <span class="code-attr">align</span>=<span class="code-value">"bottom"</span>
        <span class="code-attr">style</span>=<span class="code-value">"height:100px"</span>&gt; //底部对齐
     &lt;s-col <span class="code-attr">span</span>=<span class="code-value">"5"</span>&gt;
@@ -282,7 +300,8 @@
           &lt;div <span class="code-attr">style</span>=<span class="code-value">"height: 50px;"</span>&gt; col-5 &lt;/div&gt;
     &lt;/s-col&gt;
 &lt;/s-row&gt;</code>
-          </pre>
+            </pre>
+            </div>
 
           </s-col>
         </s-row>

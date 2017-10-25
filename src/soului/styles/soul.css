@@ -424,7 +424,15 @@ a:hover, a:focus {
   -webkit-transition: color .1s linear 0s,background-color .1s linear 0s,opacity .2s linear;
   transition: color .1s linear 0s,background-color .1s linear 0s,opacity .2s linear;
 }
-.soul-btn-rounded {
+.soul-btn-large {
+  height: 36px;
+  padding: 0 20px;
+}
+.soul-btn-small {
+  height: 24px;
+  padding: 0 7px;
+}
+.soul-btn-circle {
 	border-radius: 30px;
 }
 .soul-btn.disabled,
@@ -446,7 +454,7 @@ a:hover, a:focus {
 	opacity: .82;
 }
 .soul-btn-default {
-	color: #333;
+	color: rgba(0,0,0,.65);
 	border: 1px solid #e5e5e5;
 	background: #fff;
 }
@@ -773,9 +781,10 @@ a:hover, a:focus {
   top: 11px;
   right: 6px;
   cursor: pointer;
-  -ms-transform: rotate(45deg);
-	transform: rotate(45deg);
   z-index: 99;
+}
+.message-wrap .msg-close-icon:hover {
+  color: rgba(255,255,255,.8);
 }
 
 /************************************ Font CSS ************************************/

@@ -7,7 +7,7 @@
          @mouseleave="startTask">
       <icon :type="iconType" class="msg-type-icon"></icon>
       <span v-html="content"></span>
-      <icon v-if="showClose" type="add" class="msg-close-icon" @click.native.stop="closeMsg"></icon>
+      <icon v-if="closable" type="close" class="msg-close-icon" @click.native.stop="closeMsg"></icon>
     </div>
   </transition>
 </template>
@@ -22,10 +22,11 @@
             visible: false,
             content: '',
             type: 'info',
-            duration: 3000,
+            duration: 3,
             onClose: null,
-            showClose: false,
-            timedTask: null
+            closable: false,
+            timedTask: null,
+            top: ''
         }
       },
       computed: {
@@ -35,10 +36,10 @@
                     return 'info';
                     break;
                 case "success":
-                    return 'checkcircle';
+                    return 'check-circle';
                     break;
                 case "warn":
-                    return 'warncircle';
+                    return 'warn-circle';
                     break;
                 case "error":
                     return 'cry';
@@ -65,7 +66,7 @@
                 if (this.visible) {
                   this.closeMsg();
                 }
-              }, this.duration);
+              }, this.duration * 1000);
             }
           },
           clearTask() {

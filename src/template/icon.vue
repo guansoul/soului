@@ -8,15 +8,18 @@
         </p>
         <h4 class="sub-title"> 如何使用 </h4>
         <p class="mark-section"> 使用 <s-icon /> 标签声明组件，指定图标对应的 type 属性,改变样式直接用style编写样式，示例代码如下: </p>
-        <pre class="code-wrap"><code style="line-height: 30px;"><s-icon type="smile" style="font-size: 20px;top:3px;"/> &lt;s-icon <span class="code-attr">type</span>=<span class="code-value">"smile"</span> /&gt;
+        <div class="code-wrap">
+        <pre><code style="line-height: 30px;"><s-icon type="smile" style="font-size: 20px;top:3px;"/> &lt;s-icon <span class="code-attr">type</span>=<span class="code-value">"smile"</span> /&gt;
 <s-icon type="warn" style="font-size: 20px;top:3px;color: #ff6d5e;"/> &lt;s-icon <span class="code-attr">type</span>=<span class="code-value">"warn"</span> <span class="code-attr">style</span>=<span class="code-value">"color: #ff6d5e;"</span> /&gt; </code>
         </pre>
-
+        </div>
         <p class="mark-section"> soul icon在原有基础上新增了两个动态效果，快速旋转和缓慢旋转效果，示例: </p>
-        <pre class="code-wrap">
+        <div class="code-wrap">
+        <pre>
           <code style="line-height: 30px;"><s-icon type="loader" animation="fast" style="font-size: 20px;top:3px;"/> &lt;s-icon <span class="code-attr">type</span>=<span class="code-value">"loader"</span> <span class="code-attr">animation</span>=<span class="code-value">"fast"</span> /&gt;
 <s-icon type="loading" animation="slow" style="font-size: 20px;top: 3px;"/> &lt;s-icon <span class="code-attr">type</span>=<span class="code-value">"loading"</span> <span class="code-attr">animation</span>=<span class="code-value">"slow"</span> /&gt;</code>
         </pre>
+        </div>
 
         <h4 class="sub-title"> 图标列表 </h4>
         <h4 class="sub-title" style="font-size: 16px;line-height: 40px;"> 常用图标 </h4>

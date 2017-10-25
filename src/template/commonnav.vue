@@ -12,16 +12,19 @@
             <a href="/#/layout" :class="{'active': linkNav == 'layout'}" @click="linkNav = 'layout'">Layout 布局</a>
           </li>
           <li>
-            <a href="/#/icon" :class="{'active': linkNav == 'button'}" @click="linkNav = 'button'">Button 按钮</a>
+            <a href="/#/button" :class="{'active': linkNav == 'button'}" @click="linkNav = 'button'">Button 按钮</a>
           </li>
           <li>
             <a href="/#/icon" :class="{'active': linkNav == 'icon'}" @click="linkNav = 'icon'">Icon 图标库</a>
           </li>
           <li>
-            <a href="/#/icon" :class="{'active': linkNav == 'switch'}" @click="linkNav = 'switch'">Switch 开关</a>
+            <a href="/#/switch" :class="{'active': linkNav == 'switch'}" @click="linkNav = 'switch'">Switch 开关</a>
           </li>
           <li>
-            <a href="/#/icon" :class="{'active': linkNav == 'select'}" @click="linkNav = 'select'">Select 选择器</a>
+            <a href="/#/select" :class="{'active': linkNav == 'select'}" @click="linkNav = 'select'">Select 选择器</a>
+          </li>
+          <li>
+            <a href="/#/message" :class="{'active': linkNav == 'message'}" @click="linkNav = 'message'">Message 选择器</a>
           </li>
         </ul>
       </div>
@@ -38,7 +41,7 @@ export default {
   name: 'commonnav',
   data() {
     return {
-        linkNav: "layout"
+        linkNav: ""
     }
   },
   components: {
