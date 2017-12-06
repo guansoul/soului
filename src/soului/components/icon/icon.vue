@@ -1,5 +1,5 @@
 <template>
-  <i class="soulicon" :class="icontype" :style="stylecss" ></i>
+  <i class="soulicon" :class="icontype" :style="stylecss" @click="handleClick"></i>
 </template>
 
 <script>
@@ -16,6 +16,11 @@
           },
           stylecss() {
               return this.styles
+          }
+      },
+      methods: {
+          handleClick () {
+              this.$emit('click', event);
           }
       }
   }

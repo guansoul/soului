@@ -13,6 +13,7 @@ export default {
             clearFilter: '全部'
         },
         datepicker: {
+            now: '現在',
             selectDate: '日時を選んでください',
             selectTime: '時間を選んでください',
             startTime: 'スタート時間',

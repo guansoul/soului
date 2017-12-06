@@ -13,6 +13,7 @@ export default {
             clearFilter: 'Hepsi'
         },
         datepicker: {
+            now: 'Şimdi',
             selectDate: 'Tarih seç',
             selectTime: 'Zaman seç',
             startTime: 'Başlangıç',

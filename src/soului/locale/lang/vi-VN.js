@@ -13,6 +13,7 @@ export default {
             clearFilter: 'Xóa hết'
         },
         datepicker: {
+            now: 'Hiện tại',
             selectDate: 'Chọn ngày',
             selectTime: 'Chọn giờ',
             startTime: 'Ngày bắt đầu',

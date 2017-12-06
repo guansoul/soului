@@ -13,6 +13,7 @@ export default {
             clearFilter: 'Все'
         },
         datepicker: {
+            now: 'Сейчас',
             selectDate: 'Выбрать дату',
             selectTime: 'Выбрать время',
             startTime: 'Начальное время',

@@ -8,6 +8,9 @@ import sMessage from './components/message';
 import { sSelect, sOption } from './components/select';
 import sSwitch from './components/switch';
 import sButton from './components/button';
+import { sCheckbox, sCheckboxGroup } from './components/checkbox';
+import { sRadio, sRadioGroup } from './components/radio';
+import { sDatepicker, sDaterange } from './components/datepicker'
 
 const components = {
   sIcon,
@@ -16,7 +19,13 @@ const components = {
   sSelect,
   sOption,
   sSwitch,
-  sButton
+  sButton,
+  sCheckbox,
+  sCheckboxGroup,
+  sRadio,
+  sRadioGroup,
+  sDatepicker,
+  sDaterange
 }
 
 

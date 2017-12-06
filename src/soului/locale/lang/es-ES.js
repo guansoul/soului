@@ -13,6 +13,7 @@ export default {
             clearFilter: 'Todos'
         },
         datepicker: {
+            now: 'Ahora',
             selectDate: 'Seleccionar fecha',
             selectTime: 'Seleccionar hora',
             startTime: 'Hora de inicio',

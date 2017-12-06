@@ -186,3 +186,14 @@ body {
 .usage-wrap .code-wrap {
   margin-top: 7px;
 }
+.single-checkbox .soul-checkbox,
+.single-radio .soul-radio {
+  margin-left: 15px;
+}
+.single-checkbox .soul-checkbox:first-child,
+.single-radio .soul-radio:first-child {
+  margin-left: 3px;
+}
+
+
+

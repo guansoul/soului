@@ -13,6 +13,7 @@ export default {
             clearFilter: 'Semua'
         },
         datepicker: {
+            now: 'Sekarang',
             selectDate: 'Pilih tanggal',
             selectTime: 'Pilih waktu',
             startTime: 'Waktu Mulai',

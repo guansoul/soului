@@ -13,6 +13,7 @@ export default {
             clearFilter: 'Rensa filter'
         },
         datepicker: {
+            now: 'Nu',
             selectDate: 'Välj datum',
             selectTime: 'Välj tidpunkt',
             startTime: 'Start tid',
