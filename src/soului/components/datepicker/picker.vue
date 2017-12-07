@@ -171,8 +171,8 @@
               internalValue: this.value,
               disableClickOutSide: false,
               disableCloseUnderTransfer: false,
-              startdate: '',
-              enddate: ''
+              startdate: typeof this.value == 'object' ? this.value.startdate : "",
+              enddate: typeof this.value == 'object' ? this.value.enddate : ""
           };
       },
       computed: {
@@ -207,17 +207,22 @@
                   this.picker.value = this.value;
 
                   this.picker.$on('pick', (date, visible = false) => {
-                      if (!this.picker.confirm) {
-                          this.dropVisible = visible;
-                      }
                       if(this.dateType == 'date') {
+                          if (!this.picker.confirm) {
+                              this.dropVisible = visible;
+                          }
                           this.picker.value = date;
+                          this.picker.resetView();
+                          this.emitChange(date);
                       } else {
                           this.picker.startValue = date.startdate;
                           this.picker.endValue = date.enddate;
+                          if(!this.picker.confirm && date.startdate && date.enddate) {
+                              this.dropVisible = visible;
+                              this.emitChange(date);
+                          }
+                          this.picker.resetView();
                       }
-                      this.picker.resetView();
-                      this.emitChange(date);
                   });
               } else {
                   this.picker.confirm = this.type == "datetime" ? true : false;
@@ -269,6 +274,6 @@
           if (this.picker) {
               this.picker.$destroy();
           }
-      },
+      }
   }
 </script>

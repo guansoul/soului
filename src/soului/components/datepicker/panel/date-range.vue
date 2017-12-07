@@ -10,18 +10,31 @@
           <span class="soul-datepicker-month" v-show="startView == 'date' || startView == 'datetime'" @click="startView = 'month';"> {{ startmonthLabel }} </span>
         </div>
 
-        <div class="soul-date-content" :class="{'soul-daterange-bottom': !showTime}" style="padding-right: 4px;">
-          <year-table ref="startyearTable" v-show="startView == 'year'" @pick="handlesStartYearPick" :year="startyear"></year-table>
-          <month-table ref="startmonthTable" v-show="startView == 'month'" @pick="handleStartMonthPick" :month="startmonth"></month-table>
-          <date-table ref="startdateTable" v-show="startView == 'date'" :value="startValue" :year="startyear" :month="startmonth" :date="startdate" :range-start="startValue" :range-end="endValue" datetype="range" @pick="handleDatePick"></date-table>
-          <time-table ref="starttimeTable" v-show="currentType == 'datetime'" :hours="starthours" :minutes="startminutes" :seconds="startseconds" :show-seconds="showSeconds" @pick="handleTimePick"></time-table>
+        <div class="soul-date-content" :class="{'soul-daterange-bottom': !showTime}" style="padding-right: 3px;">
+          <year-table ref="startyearTable" v-show="startView == 'year'"
+                      @pick="handlesStartYearPick" :year="startyear"> </year-table>
+          <month-table ref="startmonthTable" v-show="startView == 'month'"
+                       @pick="handleStartMonthPick" :month="startmonth"> </month-table>
+          <date-table ref="startdateTable" v-show="startView == 'date'" :range-state="rangeState"
+                      :year="startyear" :month="startmonth" :date="startdate"
+                      :startdate="startValue" :enddate="endValue" datetype="range"
+                      @pick="handleDatePick" @changerange="handleChangeRange"> </date-table>
+          <time-table ref="starttimeTable" v-show="currentType == 'datetime'"
+                      :hours="starthours" :minutes="startminutes" :seconds="startseconds"
+                      :show-seconds="showSeconds" @pick="handleStartTimePick"> </time-table>
+
+          <div class="soul-date-time-cutline" v-show="currentType == 'datetime'"></div>
+        </div>
+        <div class="soul-date-footer clearfix" v-if="showTime">
+           <span @click="toggleSelect" :class="{'soul-date-selecttime-disabeld': !startValue || !endValue}">{{ selectNote }}</span>
         </div>
       </div>
     </div>
 
+
     <div class="soul-datepicker-wrap">
       <div class="soul-datepicker-body">
-        <div class="soul-date-header" :class="{'disabled-wrap': currentType == 'datetime'}" style="padding-left: 4px;">
+        <div class="soul-date-header" :class="{'disabled-wrap': currentType == 'datetime'}" style="padding-left: 3px;">
           <span class="soul-datepicker-year" @click="endView = 'year';"> {{ endyearLabel }} </span>
           <span class="soul-datepicker-month" v-show="endView == 'date' || endView == 'datetime'" @click="endView = 'month';"> {{ endmonthLabel }} </span>
           <s-icon type="right" v-show="endView == 'date'"  @click="nextMonth"/>
@@ -29,15 +42,23 @@
         </div>
 
         <div class="soul-date-content" :class="{'soul-daterange-bottom': !showTime}" style="padding-left: 4px;">
-          <year-table ref="endyearTable" v-show="endView == 'year'" @pick="handleEndYearPick" :year="endyear"></year-table>
-          <month-table ref="endmonthTable" v-show="endView == 'month'" @pick="handleEndMonthPick" :month="endmonth"></month-table>
-          <date-table ref="enddateTable" v-show="endView == 'date'" :value="endValue" :year="endyear" :month="endmonth" :date="enddate" :range-start="startValue" :range-end="endValue" datetype="range" @pick="handleDatePick"></date-table>
-          <time-table ref="endtimeTable" v-show="currentType == 'datetime'" :hours="endhours" :minutes="endminutes" :seconds="endseconds" :show-seconds="showSeconds" @pick="handleTimePick"></time-table>
+          <year-table ref="endyearTable" v-show="endView == 'year'"
+                      @pick="handleEndYearPick" :year="endyear"></year-table>
+          <month-table ref="endmonthTable" v-show="endView == 'month'"
+                       @pick="handleEndMonthPick" :month="endmonth"></month-table>
+          <date-table ref="enddateTable" v-show="endView == 'date'" :range-state="rangeState"
+                      :year="endyear" :month="endmonth" :date="enddate"
+                      :startdate="startValue" :enddate="endValue" datetype="range"
+                      @pick="handleDatePick" @changerange="handleChangeRange"></date-table>
+          <time-table ref="endtimeTable" v-show="currentType == 'datetime'" :hours="endhours"
+                      :minutes="endminutes" :seconds="endseconds" :show-seconds="showSeconds"
+                      @pick="handleEndTimePick"></time-table>
         </div>
-        <div class="soul-date-footer" v-if="showTime">
-           <span @click="toggleSelect">{{ selectNote }}</span>
-           <button type="button" class="soul-btn soul-btn-text soul-btn-small" @click="sureTime('now')">{{ t('i.datepicker.now') }}</button>
-           <button type="button" class="soul-btn soul-btn-info soul-btn-small" @click="sureTime">{{ t('i.datepicker.ok') }}</button>
+        <div class="soul-date-footer clearfix" v-if="showTime">
+           <button type="button" class="soul-btn soul-btn-text soul-btn-small"
+                   @click="sureTime('clear')">{{ t('i.datepicker.clear') }}</button>
+           <button type="button" class="soul-btn soul-btn-info soul-btn-small"
+                   @click="sureTime">{{ t('i.datepicker.ok') }}</button>
         </div>
       </div>
     </div>
@@ -80,7 +101,11 @@
               endView: 'date',
               value: '',
               startValue: '',
-              endValue: ''
+              endValue: '',
+              rangeState: {
+                  endDate: null,
+                  selecting: false
+              },
           }
       },
       mounted () {
@@ -120,22 +145,51 @@
           },
       },
       watch: {
+        value (newVal) {
+              if (!newVal) return;
+              if (typeof newVal == 'object') {
+                  this.startValue = newVal.startdate;
+                  this.endValue = newVal.enddate;
+              }
+          },
           startValue (newVal) {
               if (!newVal) return;
               newVal = new Date(newVal);
               if (!isNaN(newVal)) {
-                  this.startdate = newVal;
-                  this.startyear = newVal.getFullYear();
-                  this.startmonth = newVal.getMonth();
+                  const newYear = newVal.getFullYear();
+                  const newMonth = newVal.getMonth();
+                  if(this.endyear != newYear || this.endmonth != newMonth) {
+                      this.startdate = newVal;
+                      this.startyear = newVal.getFullYear();
+                      this.startmonth = newVal.getMonth();
+                  }
               }
           },
           endValue (newVal) {
               if (!newVal) return;
               newVal = new Date(newVal);
               if (!isNaN(newVal)) {
-                  this.enddate = newVal;
-                  this.endyear = newVal.getFullYear();
-                  this.endmonth = newVal.getMonth();
+                  const startVal = new Date(this.startValue);
+                  const startYear = startVal.getFullYear();
+                  const startMonth = startVal.getMonth();
+                  const endYear = newVal.getFullYear();
+                  const endMonth = newVal.getMonth();
+                  if(startYear == endYear && startMonth == endMonth) {
+                      this.enddate = newVal;
+                      this.endyear = endYear;
+                      this.endmonth = endMonth + 1;
+                      if(this.endmonth == 12) {
+                          this.endyear = endYear + 1;
+                          this.endmonth = 0;
+                      }
+                      this.enddate.setFullYear(this.endyear);
+                      this.enddate.setMonth(this.endmonth);
+                  } else {
+                      this.enddate = newVal;
+                      this.endyear = endYear;
+                      this.endmonth = endMonth;
+                  }
+
               }
           },
           currentType (newVal) {
@@ -146,7 +200,6 @@
       },
       methods: {
           initDate () {
-              console.log(this.enddate);
               if (this.enddate && !this.endyear) {
                   this.endyear = this.enddate.getFullYear();
                   this.endmonth = this.enddate.getMonth();
@@ -233,6 +286,9 @@
               this.handleYearPick(year, 'start');
           },
           handleEndYearPick(year, close = true) {
+              if(this.startyear>year) {
+                  year = this.startyear;
+              }
               this.handleYearPick(year, 'end');
           },
           handleYearPick(year, yearView, close = true) {
@@ -250,7 +306,21 @@
               this.handleMonthPick(month, 'start');
           },
           handleEndMonthPick (month) {
+              if(this.startyear == this.endyear && this.startmonth >= month) {
+                  month = this.startmonth + 1;
+                  if(month == 12) {
+                      month = 0;
+                      this.handleYearPick(this.startyear + 1, 'end');
+                  }
+              }
               this.handleMonthPick(month, 'end');
+
+          },
+          handleStartTimePick (time) {
+              this.handleTimePick(time, 'start');
+          },
+          handleEndTimePick (time) {
+              this.handleTimePick(time, 'end');
           },
           handleMonthPick (month, monthView) {
               this[`${monthView}month`] = month;
@@ -261,36 +331,38 @@
               } else {
                   this[`${monthView}date`].setMonth(month);
                   this[`${monthView}year`] && this[`${monthView}date`].setFullYear(this[`${monthView}year`]);
-//                  const value = new Date(this.date.getFullYear(), month, 1);
-//                  this.$emit('pick', value);
+              }
+              if(this.currentType == 'month' && monthView == 'end') {
+                  this.$emit('pick', {
+                      startdate: this.startdate,
+                      enddate: this.enddate
+                  });
               }
               this.resetDate();
           },
           handleDatePick(date) {
-//              if (this.selectionMode === 'day') {
-//                  date = new Date(date);
-//                  this.date.setFullYear(date.getFullYear());
-//                  this.date.setMonth(date.getMonth());
-//                  this.date.setDate(date.getDate());
-//                  this.$emit('pick', new Date(this.date));
-//              }
               this.startValue = new Date(date.startdate);
               this.endValue = new Date(date.enddate);
               this.$emit('pick', date);
               this.resetDate();
           },
-          handleTimePick(date, emit = true) {
+          handleChangeRange(rangeData) {
+              this.startValue = rangeData.startdate;
+              this.endValue = rangeData.enddate;
+              this.rangeState = rangeData.rangeState;
+          },
+          handleTimePick(date, timeView) {
               if (date.hours !== undefined) {
-                  this.date.setHours(date.hours);
-                  this.hours = this.date.getHours();
+                  this[`${timeView}date`].setHours(date.hours);
+                  this[`${timeView}hours`] = this[`${timeView}date`].getHours();
               }
               if (date.minutes !== undefined) {
-                  this.date.setMinutes(date.minutes);
-                  this.minutes = this.date.getMinutes();
+                  this[`${timeView}date`].setMinutes(date.minutes);
+                  this[`${timeView}minutes`] = this[`${timeView}date`].getMinutes();
               }
               if (date.seconds !== undefined) {
-                  this.date.setSeconds(date.seconds);
-                  this.seconds = this.date.getSeconds();
+                  this[`${timeView}date`].setSeconds(date.seconds);
+                  this[`${timeView}seconds`] = this[`${timeView}date`].getSeconds();
               }
           },
           toggleSelect() {
@@ -298,17 +370,31 @@
                   this.currentType = 'date';
                   this.selectNote = this.t('i.datepicker.selectTime');
               } else if(this.currentType == 'date') {
-                  this.$refs.timeTable.updateScroll();
+                  this.$refs.starttimeTable.updateScroll();
+                  this.$refs.endtimeTable.updateScroll();
                   this.currentType = 'datetime';
                   this.selectNote = this.t('i.datepicker.selectDate');
               }
           },
           sureTime(sureDate) {
               this.confirm = false;
-              if(sureDate == 'now') {
-                  this.date = new Date();
+              this.startValue.setHours(this.starthours);
+              this.startValue.setMinutes(this.startminutes);
+              this.startValue.setSeconds(this.startseconds);
+              this.endValue.setHours(this.endhours);
+              this.endValue.setMinutes(this.endminutes);
+              this.endValue.setSeconds(this.endseconds);
+              if(this.startValue.getTime() > this.endValue.getTime()) {
+                  this.endValue = this.startValue;
               }
-              this.$emit('pick', this.date);
+              if(sureDate == 'clear') {
+                  this.startdate = null;
+                  this.enddate = null;
+              }
+              this.$emit('pick', {
+                  startdate: this.startValue,
+                  enddate: this.endValue
+              });
           }
       }
   }

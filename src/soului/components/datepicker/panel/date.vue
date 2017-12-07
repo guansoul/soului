@@ -15,7 +15,7 @@
         <date-table ref="dateTable" v-show="currentType == 'date'" :value="value" :year="year" :month="month" :date="date" @pick="handleDatePick"></date-table>
         <time-table ref="timeTable" v-show="currentType == 'datetime'" :hours="hours" :minutes="minutes" :seconds="seconds" :show-seconds="showSeconds" @pick="handleTimePick"></time-table>
       </div>
-      <div class="soul-date-footer" v-if="showTime">
+      <div class="soul-date-footer clearfix" v-if="showTime">
          <span @click="toggleSelect">{{ selectNote }}</span>
          <button type="button" class="soul-btn soul-btn-text soul-btn-small" @click="sureTime('now')">{{ t('i.datepicker.now') }}</button>
          <button type="button" class="soul-btn soul-btn-info soul-btn-small" @click="sureTime">{{ t('i.datepicker.ok') }}</button>

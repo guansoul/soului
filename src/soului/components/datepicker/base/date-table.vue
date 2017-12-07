@@ -1,12 +1,12 @@
 <template>
-  <div class="soul-date-wrap">
+  <div class="soul-date-wrap" @mousemove="handleMouseMove">
     <table class="soul-table soul-date-table">
       <tbody>
         <tr>
           <th v-for="week in weeks"> {{ t('i.datepicker.weeks.' + week) }} </th>
         </tr>
         <tr v-for="row in rows">
-          <td v-for="cell in row"><a :class="getCellCls(cell)"  @click="selectDate(cell)"> {{ cell.text }} </a></td>
+          <td v-for="cell in row" :class="getRangeCls(cell)"><a :class="getCellCls(cell)" @click="selectDate(cell)"> {{ cell.text }} </a></td>
         </tr>
       </tbody>
     </table>
@@ -43,26 +43,21 @@
               default: 'date'
           },
           disabledDate: {},
-          rangeStart: {},
-          rangeEnd: {},
-          rangeselect: {
-              type: Boolean,
-              default: false
-          },
+          startdate: '',
+          enddate: '',
           rangeState: {
-              default() {
+              default () {
                   return {
                       endDate: null,
-                      selecting: false,
-                      row: null,
-                      column: null
+                      selecting: false
                   };
               }
-          }
+          },
       },
       data(){
           return {
-              weeks: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
+              weeks: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
+              tableRows: [ [], [], [], [], [], [] ]
           }
       },
       methods: {
@@ -71,44 +66,80 @@
                   {
                       'soul-date-gray': cell.type != 'normal' && cell.type != 'today',
                       'soul-date-today': cell.type == 'today',
-                      'soul-date-selected': cell.selected
+                      'soul-date-selected': (cell.selected || cell.start || cell.end) && ( cell.type == 'normal' || cell.type == 'today')
                   }
               ]
+          },
+          getRangeCls(cell) {
+              return {
+                  'soul-date-ranged': cell.range && ( cell.type == 'normal' || cell.type == 'today')
+              }
           },
           selectDate(cell) {
               const newDate = cell.date;
               if(this.datetype == 'date') {
                   this.$emit('pick', newDate);
               } else {
-                  let rangestart = null;
-                  let rangeend = null;
-                  if (this.rangeStart && this.rangeEnd) {
-                      rangestart = new Date(newDate.getTime());
-//                      this.rangeselect = true;
-//                      this.markRange(this.startdate);
-                  } else if(this.rangeStart && !this.rangeEnd) {
-                      rangestart = this.rangeStart;
-                      rangeend = new Date(newDate.getTime());
-                  } else if(!this.rangeStart) {
-                      rangestart = new Date(newDate.getTime());
+                  let startdate = null;
+                  let enddate = null;
+                  if (this.startdate && this.enddate) {
+                      startdate = new Date(newDate.getTime());
+                      this.rangeState.selecting = true;
+                      this.markRange(startdate);
+                  } else if(this.startdate && !this.enddate) {
+                      if (clearHours(newDate) >= clearHours(this.startdate)) {
+                            startdate = this.startdate;
+                            enddate = new Date(newDate.getTime());
+                            this.rangeState.selecting = false;
+                        } else {
+                            startdate = new Date(newDate.getTime());
+                        }
+                  } else if(!this.startdate) {
+                      startdate = new Date(newDate.getTime());
+                      this.rangeState.selecting = true;
+                      this.markRange(startdate);
                   }
-                  this.$emit('pick', {'startdate': rangestart, 'enddate': rangeend}, false);
+                  this.$emit('pick', {'startdate': startdate, 'enddate': enddate}, false);
               }
           },
-          markRange (maxDate) {
-              const minDate = this.minDate;
-              if (!maxDate) maxDate = this.maxDate;
+          handleMouseMove(cell) {
+              if(!this.rangeselect) return;
+              this.markRange(cell.date);
+          },
+          getDateOfCell(row, column) {
+              const firstDate = this.firstDate;
+              return new Date(firstDate.getTime() + (row * 7 + column - this.offsetDay) * DAY_DURATION);
+          },
+          handleMouseMove(event) {
+              if (!this.rangeState.selecting) return;
+              this.$emit('changerange', {
+                  startdate: this.startdate,
+                  enddate: this.enddate,
+                  rangeState: this.rangeState
+              });
+              const target = event.target;
+              if (target.tagName.toLowerCase() == 'a') {
+                  const column = target.parentNode.cellIndex;
+                  const row = target.parentNode.parentNode.rowIndex - 1;
+                  this.rangeState.endDate = this.getDateOfCell(row, column);
+              }
+          },
+          markRange (enddate) {
+              const startdate = this.startdate;
+              if (!enddate) enddate = this.enddate;
+              const startDay = clearHours(new Date(startdate));
+              const endDay = clearHours(new Date(enddate));
 
-              const minDay = clearHours(new Date(minDate));
-              const maxDay = clearHours(new Date(maxDate));
-
-              this.cells.forEach(cell => {
-                  if (cell.type === 'today' || cell.type === 'normal') {
-                      const time = clearHours(new Date(this.year, this.month, cell.text));
-                      cell.range = time >= minDay && time <= maxDay;
-                      cell.start = minDate && time === minDay;
-                      cell.end = maxDate && time === maxDay;
-                  }
+              this.rows.forEach(
+                  cells => {
+                      cells.forEach(cell => {
+                      if (cell.type === 'today' || cell.type === 'normal') {
+                          const time = clearHours(new Date(this.year, this.month, cell.text));
+                          cell.range = time >= startDay && time <= endDay;
+                          cell.start = startDay && time === startDay;
+                          cell.end = endDay && time === endDay;
+                      }
+                  })
               });
           }
       },
@@ -121,7 +152,7 @@
           monthDate() {
               return this.date.getDate();
           },
-          startDate() {
+          firstDate() {
               return getStartDateOfMonth(this.year, this.month);
           },
           rows() {
@@ -133,14 +164,16 @@
 
                   day = (day === 0 ? 7 : day);
                   const offset = this.offsetDay;
-                  let rows = [ [], [], [], [], [], [] ];
+                  let rows = this.tableRows;
                   let count = 1;
                   let firstDayPosition;
 
-                  const startDate = this.startDate;
+                  const firstDate = this.firstDate;
                   const disabledDate = this.disabledDate;
                   const now = clearHours(new Date());
                   const selected = clearHours(new Date(this.value));
+                  const startV = clearHours(new Date(this.startdate));
+                  const endV = clearHours(new Date(this.enddate));
 
                   for (var i = 0; i < 6; i++) {
                       const row = rows[i];
@@ -153,12 +186,12 @@
                           cell.type = 'normal';
 
                           const index = i * 7 + j;
-                          const time = startDate.getTime() + DAY_DURATION * (index - offset);
-                          cell.inRange = time >= clearHours(this.minDate) && time <= clearHours(this.maxDate);
-                          cell.start = this.minDate && time === clearHours(this.minDate);
-                          cell.end = this.maxDate && time === clearHours(this.maxDate);
+                          const time = firstDate.getTime() + DAY_DURATION * (index - offset);
                           const isToday = time === now;
                           cell.selected = time === selected;
+                          cell.start = time === startV;
+                          cell.end = time === endV;
+                          cell.range = time >= startV && time <= endV;
                           if (isToday) {
                               cell.type = 'today';
                           }
@@ -202,29 +235,6 @@
       watch: {
           'rangeState.endDate'(newVal) {
               this.markRange(newVal);
-          },
-
-          startdate(newVal, oldVal) {
-              if (newVal && !oldVal) {
-                  this.rangeState.selecting = true;
-                  this.markRange(newVal);
-              } else if (!newVal) {
-                  this.rangeState.selecting = false;
-                  this.markRange(newVal);
-              } else {
-                  this.markRange();
-              }
-          },
-
-          enddate(newVal, oldVal) {
-              if (newVal && !oldVal) {
-                  this.rangeState.selecting = false;
-                  this.markRange(newVal);
-                  this.$emit('pick', {
-                      minDate: this.minDate,
-                      maxDate: this.maxDate
-                  });
-              }
           }
       }
   }

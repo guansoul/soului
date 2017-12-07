@@ -10,6 +10,9 @@
         <p class="mark-section"> 使用 <code class="code-sm">&lt;s-daterange&gt;</code> 标签声明组件，示例代码如下: </p>
         <div style="margin: 2px 0 15px;">
             <s-daterange type="date" startplaceholder="开始时间" endplaceholder="结束时间" v-model="rangeDate" @change="showDate"></s-daterange>
+
+            <s-daterange type="datetime" startplaceholder="开始时间" endplaceholder="结束时间" v-model="rangeDate" @change="showDate"></s-daterange>
+
         </div>
       </div>
     </commonnav>
