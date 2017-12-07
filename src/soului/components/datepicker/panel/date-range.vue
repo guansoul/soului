@@ -31,7 +31,6 @@
       </div>
     </div>
 
-
     <div class="soul-datepicker-wrap">
       <div class="soul-datepicker-body">
         <div class="soul-date-header" :class="{'disabled-wrap': currentType == 'datetime'}" style="padding-left: 3px;">
