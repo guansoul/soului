@@ -377,18 +377,23 @@
           },
           sureTime(sureDate) {
               this.confirm = false;
-              this.startValue.setHours(this.starthours);
-              this.startValue.setMinutes(this.startminutes);
-              this.startValue.setSeconds(this.startseconds);
-              this.endValue.setHours(this.endhours);
-              this.endValue.setMinutes(this.endminutes);
-              this.endValue.setSeconds(this.endseconds);
-              if(this.startValue.getTime() > this.endValue.getTime()) {
-                  this.endValue = this.startValue;
-              }
               if(sureDate == 'clear') {
                   this.startdate = null;
                   this.enddate = null;
+                  this.startValue = null;
+                  this.endValue = null;
+              } else {
+                  this.startValue = new Date(this.startValue);
+                  this.endValue = new Date(this.endValue);
+                  this.startValue.setHours(this.starthours);
+                  this.startValue.setMinutes(this.startminutes);
+                  this.startValue.setSeconds(this.startseconds);
+                  this.endValue.setHours(this.endhours);
+                  this.endValue.setMinutes(this.endminutes);
+                  this.endValue.setSeconds(this.endseconds);
+                  if(this.startValue.getTime() > this.endValue.getTime()) {
+                      this.endValue = this.startValue;
+                  }
               }
               this.$emit('pick', {
                   startdate: this.startValue,

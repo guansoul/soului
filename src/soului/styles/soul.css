@@ -357,6 +357,11 @@ a:hover, a:focus {
 	display: -webkit-flex;
 	display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-flow: row wrap;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
 }
 .soul-row-flex-flow {
   flex-flow: column;
@@ -1190,6 +1195,17 @@ a:hover, a:focus {
   float: left;
   width: 32px;
   padding-right: 8px;
+}
+.soul-datepicker-disabled .select-input {
+  border-color: #dce1e4;
+}
+.soul-datepicker-disabled .select-input-inner {
+  background: #f4f4f4;
+  cursor: not-allowed;
+}
+.soul-datepicker-disabled .soul-daterange-cuter {
+  background: #f4f4f4;
+  cursor: not-allowed;
 }
 .select-wrap .select-icon {
   position: absolute;

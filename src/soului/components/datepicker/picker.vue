@@ -1,14 +1,14 @@
 <template>
   <div class="soul-datepicker" :class="{'soul-daterange': dateType == 'range'}" v-clickoutside="handleClose">
-    <div class="soul-datepicker-input">
+    <div class="soul-datepicker-input" :class="{'soul-datepicker-disabled': disabled}">
       <s-icon type="calendar" class="soul-datepicker-icon"></s-icon>
       <div class="select-input" v-if="dateType == 'date'">
-        <input type="text" class="select-input-inner" :placeholder="placeholder" :value="internalValue" @focus="handleFocus">
+        <input type="text" class="select-input-inner" :placeholder="placeholder" :value="internalValue" @focus="handleFocus" @keydown="handleKeydown" @change="internalValue = $event.target.value" :disabled="disabled">
       </div>
       <div class="select-input soul-row-flex" v-else>
-        <input type="text" class="select-input-inner soul-row-flex-unit" style="padding-right: 8px;" :placeholder="startplaceholder" :value="startdate" @focus="handleFocus">
+        <input type="text" class="select-input-inner soul-row-flex-unit" style="padding-right: 8px;" :placeholder="startplaceholder" :value="startdate" @focus="handleFocus" @keydown="handleKeydown" @change="startdate = $event.target.value" :disabled="disabled">
         <span class="soul-daterange-cuter"> {{ rangetext }}</span>
-        <input type="text" class="select-input-inner soul-row-flex-unit" :placeholder="endplaceholder" :value="enddate" @focus="handleFocus">
+        <input type="text" class="select-input-inner soul-row-flex-unit" :placeholder="endplaceholder" :value="enddate" @focus="handleFocus" @keydown="handleKeydown" @change="enddate = $event.target.value" :disabled="disabled">
       </div>
     </div>
     <transition name="slide-down">
@@ -152,11 +152,11 @@
           value: {},
           startplaceholder: {
               type: String,
-              default: ''
+              default: '开始日期'
           },
           endplaceholder: {
               type: String,
-              default: ''
+              default: '结束日期'
           },
           rangetext: {
               type: String,
@@ -187,6 +187,21 @@
       },
       methods: {
           handleClose() {
+              if(this.picker) {
+                  if(this.dateType == 'date') {
+                      this.picker.value = this.internalValue ? this.formattingDate(this.internalValue) : "";
+                      this.picker.resetView();
+                      this.emitChange(this.picker.value);
+                  } else {
+                      this.picker.startValue = this.startdate ? this.formattingDate(this.startdate) : "";
+                      this.picker.endValue = this.enddate ? this.formattingDate(this.enddate) : "";
+                      this.emitChange({
+                          startdate: this.picker.startValue,
+                          enddate: this.picker.endValue
+                      });
+                      this.picker.resetView();
+                  }
+              }
               this.dropVisible = false;
           },
           handleFocus() {
@@ -217,7 +232,7 @@
                       } else {
                           this.picker.startValue = date.startdate;
                           this.picker.endValue = date.enddate;
-                          if(!this.picker.confirm && date.startdate && date.enddate) {
+                          if(!this.picker.confirm && ((date.startdate && date.enddate) || (date.startdate == null && date.enddate == null))) {
                               this.dropVisible = visible;
                               this.emitChange(date);
                           }
@@ -249,15 +264,27 @@
                 const newDate = this.formattingDate(date);
                 this.internalValue = newDate;
                 this.$emit('input', newDate);
-                this.$emit('change', newDate);
+                if(newDate != this.value) {
+                    this.$emit('change', newDate);
+                }
               } else {
                 this.startdate = date.startdate ? this.formattingDate(date.startdate) : "";
                 this.enddate = date.enddate ? this.formattingDate(date.enddate) : "";
                 date = { "startdate": this.startdate, "enddate": this.enddate };
                 this.$emit('input', date);
-                this.$emit('change', date);
+                if(typeof this.value == "object" && (this.value.startdate != this.startdate || this.value.enddate != this.enddate)) {
+                    this.$emit('change', date);
+                }
               }
           },
+          handleKeydown(event) {
+            const keyCode = event.keyCode;
+            if (keyCode === 9 || keyCode === 27) {
+              this.dropVisible = false;
+              event.target.blur();
+              event.stopPropagation();
+            }
+          }
       },
       watch: {
           dropVisible (val) {
@@ -265,6 +292,7 @@
                   this.showPicker();
                   //this.$refs.drop.update();
               } else {
+
                   if (this.picker) this.picker.resetView && this.picker.resetView(true);
                   //this.$refs.drop.destroy();
               }

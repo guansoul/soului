@@ -7,7 +7,7 @@ body {
   height: 68px;
   background: #fff;
   background: linear-gradient(90deg, #0ca088 10%, rgba(41, 169, 146, 0.9) 90%);
-  padding: 0 4%;
+  padding: 0 3.5%;
 }
 .log-title {
   float: left;
@@ -33,7 +33,7 @@ body {
   padding-right: 3px;
 }
 .content-wrap {
-  margin: 22px 4%;
+  margin: 22px 3.5%;
   background: #fff;
   border: 1px solid #e7ecf1;
   border-radius: 3px;

@@ -93,6 +93,8 @@
                             this.rangeState.selecting = false;
                         } else {
                             startdate = new Date(newDate.getTime());
+                            enddate = this.startdate;
+                            this.rangeState.selecting = false;
                         }
                   } else if(!this.startdate) {
                       startdate = new Date(newDate.getTime());
@@ -135,7 +137,7 @@
                       cells.forEach(cell => {
                       if (cell.type === 'today' || cell.type === 'normal') {
                           const time = clearHours(new Date(this.year, this.month, cell.text));
-                          cell.range = time >= startDay && time <= endDay;
+                          cell.range = (time >= startDay && time <= endDay) || (time <= startDay && time >= endDay);
                           cell.start = startDay && time === startDay;
                           cell.end = endDay && time === endDay;
                       }
