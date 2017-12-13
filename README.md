@@ -28,3 +28,9 @@ npm test
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## Demo Doc
+<img src="https://raw.githubusercontent.com/guansoul/soului/master/demo1.png">
+
+<img src="https://raw.githubusercontent.com/guansoul/soului/master/demo2.png">
+
