@@ -592,18 +592,19 @@ a:hover, a:focus {
   transition: all .3s ease;
   color: rgba(0,0,0,.8);
 }
-.soul-table>tbody>tr>td {
-	-webkit-transition: all .3s;
-  transition: all .3s;
-  border-bottom: 1px solid #e9e9e9;
-}
 .soul-table>thead>tr>th,
 .soul-table>tbody>tr>td {
 	padding: 8px;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+  border-bottom: 1px solid #e9e9e9;
 }
 .soul-table-lg>thead>tr>th,
 .soul-table-lg>tbody>tr>td {
-	padding: 15px 8px 13px;
+	padding: 16px 10px 14px;
+}
+.soul-table-border {
+	border: 1px solid #e9e9e9;
 }
 .soul-table-bordered {
 	border: 1px solid #e9e9e9;
@@ -618,7 +619,8 @@ a:hover, a:focus {
 	border-right: 1px solid #e9e9e9;
 }
 .soul-table-hover>tbody>tr:hover>td {
-	background-color: rgba(16,142,233,.08);
+  background-color: rgba(231,247,255,0.9);
+	/*background-color: rgba(16,142,233,.08);*/
 }
 .soul-table>tbody>tr.soul-tr-success>td {
 	background-color: rgba(46,197,172,0.55);
@@ -628,6 +630,21 @@ a:hover, a:focus {
 }
 .soul-table>tbody>tr.soul-tr-warning>td {
 	background-color: rgba(245,198,53,0.55);
+}
+.soul-table-stripe>tbody>tr:nth-child(even) {
+  background: #f9f9f9;
+}
+.soul-thead-fixed table>thead {
+  display: none !important;
+}
+.soul-table-wrap table {
+  table-layout: fixed;
+}
+.soul-table-header {
+  overflow: hidden;
+}
+.soul-table-body {
+  overflow: auto;
 }
 
 /************************************ Form checkbxo radio CSS ************************************/

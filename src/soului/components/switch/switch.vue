@@ -30,7 +30,7 @@
       data() {
           return {
               currentValue: this.value,
-              switchsize: this.size ? "lg-switch" : ""
+              switchsize: this.size == 'large' ? "lg-switch" : ""
           }
       },
       methods: {

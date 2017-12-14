@@ -11,6 +11,7 @@ import CheckboxDoc from '../template/checkbox'
 import RadioDoc from '../template/radio'
 import DatepickerDoc from '../template/datepicker'
 import DaterangeDoc from '../template/daterange'
+import TableDoc from '../template/table'
 
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
           path: '/button',
           name: 'button',
           component: ButtonDoc
+        },
+        {
+          path: '/table',
+          name: 'table',
+          component: TableDoc
         },
         {
           path: '/select',

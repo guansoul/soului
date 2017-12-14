@@ -18,6 +18,9 @@
             <a href="/#/button" :class="{'active': linkNav == 'button'}" @click="linkNav = 'button'">Button 按钮</a>
           </li>
           <li>
+            <a href="/#/table" :class="{'active': linkNav == 'table'}" @click="linkNav = 'table'">Table 表格</a>
+          </li>
+          <li>
             <a href="/#/checkbox" :class="{'active': linkNav == 'checkbox'}" @click="linkNav = 'checkbox'">Checkbox 多选框</a>
           </li>
           <li>
